@@ -1,10 +1,10 @@
-package com.episen.documentmanagement;
+package com.episen.docmanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DocumentmanagementApplicationTests {
+class DocmanagementApplicationTests {
 
     @Test
     void contextLoads() {

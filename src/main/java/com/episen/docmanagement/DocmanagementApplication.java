@@ -1,13 +1,13 @@
-package com.episen.documentmanagement;
+package com.episen.docmanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DocumentmanagementApplication {
+public class DocmanagementApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DocumentmanagementApplication.class, args);
+        SpringApplication.run(DocmanagementApplication.class, args);
     }
 
 }
