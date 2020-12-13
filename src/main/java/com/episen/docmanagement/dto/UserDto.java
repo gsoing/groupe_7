@@ -12,6 +12,7 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
+    @Id
     private String id;
     private String nickname;
     private String mail;
