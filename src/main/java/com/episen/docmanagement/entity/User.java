@@ -1,8 +1,9 @@
 package com.episen.docmanagement.entity;
 
-import com.episen.docmanagement.dto.UserDto;
+//import com.episen.docmanagement.dto.UserDto;
 import lombok.*;
 import org.springframework.data.annotation.*;
+
 
 @Data
 @Builder
@@ -12,13 +13,13 @@ public class User {
     private String nickname;
     private String mail;
 
-    public UserDto toDto(){
+ /*   public UserDto toDto(){
         return UserDto.builder()
                 .id(id)
                 .mail(mail)
                 .nickname(nickname)
                 .build();
-    }
+    } */
 
     public User(String id, String nickname, String mail) {
         this.id = id;

@@ -1,27 +1,15 @@
 package com.episen.docmanagement.dto;
 
+import java.util.List;
 
-import com.episen.docmanagement.entity.User;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-import org.springframework.data.annotation.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Builder
 public class UserDto {
-    @Id
-    private String id;
-    private String nickname;
-    private String mail;
-
-    public User toEntity() {
-        return User.builder()
-                .id(id)
-                .mail(mail)
-                .nickname(nickname)
-                .build();
-    }
+    private String username;
+    private List<String> roles;
 }
