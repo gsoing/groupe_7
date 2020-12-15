@@ -27,5 +27,16 @@ public class DocumentController {
         return documentService.createJsonWithDocumentsDetails(page, pageSize);
     }
 
+    @GetMapping("/{documentId}")
+    public Document findDocumentById(@PathVariable(required = false) String documentId){
+        return documentService.getDocumentById(documentId);
+    }
+
+    //TODO : ne modifie pas
+    @PutMapping("/{documentId}")
+    public Document updateDocument(@PathVariable(required = true) String documentId, @RequestBody Document document){
+        return documentService.updateDocument(documentId, document);
+    }
+
 
 }

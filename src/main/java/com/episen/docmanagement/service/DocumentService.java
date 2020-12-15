@@ -8,6 +8,7 @@ import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,4 +50,23 @@ public class DocumentService {
         return this.documentRepository.findAll();
     }
 
+    public Document getDocumentById(String id){
+        for (Document d: findAll()){
+            if (d.getDocumentId().equals(id))
+                return d;
+        }
+        return null;
+    }
+
+    //Mettre à jour l'utilisateur
+    public Document updateDocument(String documentId, Document updateDoc){
+        Document document = getDocumentById(documentId);
+        System.out.println("TEEEST : " + updateDoc.getBody());
+        document.setBody(updateDoc.getBody());
+        document.setTitle(updateDoc.getTitle());
+        document.setUpdated(LocalDateTime.now());
+        return documentRepository.save(document);
+    }
+
 }
+
