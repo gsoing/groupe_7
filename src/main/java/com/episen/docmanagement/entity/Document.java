@@ -3,6 +3,7 @@ package com.episen.docmanagement.entity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -10,9 +11,9 @@ public class Document {
     @Id
     private String documentId;
 
-    private Date created;
+    private LocalDateTime created;
 
-    private Date upadated;
+    private LocalDateTime updated;
 
     private String title;
 
@@ -24,25 +25,31 @@ public class Document {
 
     private Status status;
 
-    public Document(String title, String body) {
+    public Document(String title, String creator, String editor, String body) {
         this.title = title;
+        this.creator = creator;
+        this.editor = editor;
         this.body = body;
+        this.created = LocalDateTime.now();
+        this.status = Status.CREATED;
     }
 
-    public Date getCreated() {
+
+
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public Date getUpadated() {
-        return upadated;
+    public LocalDateTime getUpdated() {
+        return updated;
     }
 
-    public void setUpadated(Date upadated) {
-        this.upadated = upadated;
+    public void setUpdated(LocalDateTime upadated) {
+        this.updated = upadated;
     }
 
     public String getTitle() {
@@ -90,7 +97,7 @@ public class Document {
         return "Document{" +
                 "documentId='" + documentId + '\'' +
                 ", created=" + created +
-                ", upadated=" + upadated +
+                ", upadated=" + updated +
                 ", title='" + title + '\'' +
                 ", creator='" + creator + '\'' +
                 ", editor='" + editor + '\'' +

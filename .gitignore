@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+/src/main/ressources/application.properties
+doc.json

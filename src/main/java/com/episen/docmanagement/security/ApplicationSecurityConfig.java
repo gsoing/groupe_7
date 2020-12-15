@@ -38,7 +38,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-              //  .antMatchers("/api/**/documents").hasRole("READER")
+               .antMatchers("/api/**/documents").hasRole("WRITTER")
                 .antMatchers("/api/**/user").hasRole("WRITTER")
                 .and()
                 .httpBasic()

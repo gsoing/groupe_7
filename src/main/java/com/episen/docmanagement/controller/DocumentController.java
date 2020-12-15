@@ -4,27 +4,28 @@ import com.episen.docmanagement.entity.Document;
 import com.episen.docmanagement.service.DocumentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import net.minidev.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(DocumentController.PATH)
 @AllArgsConstructor
 @Slf4j
 public class DocumentController {
 
+    public static final String PATH = "/api/v1/documents";
+
     public DocumentService documentService;
 
-    @PostMapping("/documents")
-    public Document createDocument(@RequestBody Document document){
+    @PostMapping
+    public JSONObject createDocument(@RequestBody Document document){
         return documentService.insertInMongo(document);
     }
 
-    @GetMapping("/documents")
-    public List<Document> findAll(){
-        return documentService.findAll();
+    @GetMapping("/{pageSize}/{page}")
+    public JSONObject findAll(@PathVariable(required = false) int page, @PathVariable(required = false) int pageSize){
+        return documentService.createJsonWithDocumentsDetails(page, pageSize);
     }
+
+
 }
