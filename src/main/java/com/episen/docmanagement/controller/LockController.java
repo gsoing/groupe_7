@@ -28,7 +28,7 @@ public class LockController {
     }
 
 
-    //TODO: Ajout gestion des erreurs + lock perssimiste
+    //TODO: Ajout gestion des erreurs
     //TODO: Si un document est verrouillé, personne à part le propriétaire du verrou ne peut le modifier. Seul le propriétaire d’un verrou peut déverrouiller un document.
     @GetMapping("/{documentId}/lock")
     @ResponseBody
