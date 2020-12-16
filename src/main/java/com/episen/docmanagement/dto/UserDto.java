@@ -12,4 +12,8 @@ import lombok.Data;
 public class UserDto {
     private String username;
     private List<String> roles;
+
+    public List<String> getRoles() {
+        return roles;
+    }
 }

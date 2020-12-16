@@ -31,6 +31,7 @@ public class Document {
         this.editor = editor;
         this.body = body;
         this.created = LocalDateTime.now();
+        this.updated = LocalDateTime.now();
         this.status = Status.CREATED;
     }
 

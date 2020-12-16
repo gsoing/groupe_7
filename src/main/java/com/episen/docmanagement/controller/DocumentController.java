@@ -23,12 +23,12 @@ public class DocumentController {
     }
 
     @GetMapping("/{pageSize}/{page}")
-    public JSONObject findAll(@PathVariable(required = false) int page, @PathVariable(required = false) int pageSize){
+    public JSONObject findAll(@PathVariable(required = true) int page, @PathVariable(required = false) int pageSize){
         return documentService.createJsonWithDocumentsDetails(page, pageSize);
     }
 
     @GetMapping("/{documentId}")
-    public Document findDocumentById(@PathVariable(required = false) String documentId){
+    public Document findDocumentById(@PathVariable(required = true) String documentId){
         return documentService.getDocumentById(documentId);
     }
 

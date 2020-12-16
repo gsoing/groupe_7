@@ -1,16 +1,22 @@
 package com.episen.docmanagement.service;
 
+import com.episen.docmanagement.dto.UserDto;
 import com.episen.docmanagement.entity.Document;
+import com.episen.docmanagement.entity.User;
 import com.episen.docmanagement.repository.DocumentRepository;
 import javafx.scene.input.DataFormat;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +35,29 @@ public class DocumentService {
     }
 
     public JSONObject insertInMongo(Document document){
-        documentRepository.insert(document);
-        return createJsonWithDocumentsDetails(0, 10);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = authentication.getName();
+        document.setCreator(username);
+        document.setEditor(username);
+
+
+        UserDto userDto = UserDto.builder()
+                .username(authentication.getName())
+                .roles(
+                        authentication.getAuthorities()
+                                .stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .collect(Collectors.toList())
+                ).build();
+
+        if(userDto.getRoles().contains("ROLE_WRITTER")){
+            documentRepository.insert(document);
+            return createJsonWithDocumentsDetails(0, findAll().size());
+        } else {
+            System.out.println("PAS INSEREE");
+        }
+        return null;
     }
 
     public List<Document> getListOnPageNumber(int pageSize, int page){
@@ -58,10 +85,13 @@ public class DocumentService {
         return null;
     }
 
-    //Mettre à jour l'utilisateur
     public Document updateDocument(String documentId, Document updateDoc){
         Document document = getDocumentById(documentId);
-        System.out.println("TEEEST : " + updateDoc.getBody());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        document.setEditor(username);
+
         document.setBody(updateDoc.getBody());
         document.setTitle(updateDoc.getTitle());
         document.setUpdated(LocalDateTime.now());
