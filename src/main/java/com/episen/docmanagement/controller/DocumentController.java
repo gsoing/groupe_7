@@ -32,7 +32,6 @@ public class DocumentController {
         return documentService.getDocumentById(documentId);
     }
 
-    //TODO : ne modifie pas
     @PutMapping("/{documentId}")
     public Document updateDocument(@PathVariable(required = true) String documentId, @RequestBody Document document){
         return documentService.updateDocument(documentId, document);
