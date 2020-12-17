@@ -1,10 +1,11 @@
 package com.episen.docmanagement.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 public class Document {
@@ -25,6 +26,8 @@ public class Document {
 
     private Status status;
 
+    private int version;
+
     public Document(String title, String creator, String editor, String body) {
         this.title = title;
         this.creator = creator;
@@ -33,6 +36,7 @@ public class Document {
         this.created = LocalDateTime.now();
         this.updated = LocalDateTime.now();
         this.status = Status.CREATED;
+        this.version = 0;
     }
 
 
@@ -93,6 +97,14 @@ public class Document {
         this.status = status;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "Document{" +
@@ -104,6 +116,7 @@ public class Document {
                 ", editor='" + editor + '\'' +
                 ", body='" + body + '\'' +
                 ", status=" + status +
+                ", version=" + version +
                 '}';
     }
 }

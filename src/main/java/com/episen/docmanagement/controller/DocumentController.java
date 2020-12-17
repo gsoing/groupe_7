@@ -5,12 +5,14 @@ import com.episen.docmanagement.service.DocumentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(DocumentController.PATH)
 @AllArgsConstructor
 @Slf4j
+@Controller
 public class DocumentController {
 
     public static final String PATH = "/api/v1/documents";
@@ -36,6 +38,7 @@ public class DocumentController {
     public Document updateDocument(@PathVariable(required = true) String documentId, @RequestBody Document document){
         return documentService.updateDocument(documentId, document);
     }
+
 
 
 }

@@ -1,10 +1,9 @@
 package com.episen.docmanagement.service;
 
+import com.episen.docmanagement.dto.DocumentDto;
 import com.episen.docmanagement.dto.UserDto;
 import com.episen.docmanagement.entity.Document;
-import com.episen.docmanagement.entity.User;
 import com.episen.docmanagement.repository.DocumentRepository;
-import javafx.scene.input.DataFormat;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,6 @@ public class DocumentService {
 
     public List<Document> getListOnPageNumber(int pageSize, int page){
         int documentsSize = this.documentRepository.findAll().size();
-        int nbPage = documentsSize / pageSize + 1;
         List<Document> documents = new ArrayList<>();
         int i = 0;
         int j = page;
@@ -85,17 +83,25 @@ public class DocumentService {
         return null;
     }
 
+    //Lock optimiste
     public Document updateDocument(String documentId, Document updateDoc){
-        Document document = getDocumentById(documentId);
 
+        Document document = getDocumentById(documentId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        int version = document.getVersion();
         document.setEditor(username);
 
         document.setBody(updateDoc.getBody());
         document.setTitle(updateDoc.getTitle());
         document.setUpdated(LocalDateTime.now());
-        return documentRepository.save(document);
+        if (version == getDocumentById(documentId).getVersion()){
+            document.setVersion(version+1);
+            return documentRepository.save(document);
+
+        } else {
+            return null;
+        }
     }
 
 }
