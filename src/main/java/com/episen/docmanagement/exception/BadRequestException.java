@@ -7,7 +7,7 @@ public class BadRequestException extends AbstractException {
     public static final BadRequestException DEFAULT = new BadRequestException();
 
     public static final String BAD_REQUEST_CODE = "err.func.wired.badrequest";
-    public static final String BAD_REQUEST_MESSAGE = "The request is bad formated";
+    public static final String BAD_REQUEST_MESSAGE = "Erreur sur la requête";
 
     private BadRequestException() {
         super(HttpStatus.BAD_REQUEST,
