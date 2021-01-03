@@ -1,6 +1,5 @@
 package com.episen.docmanagement.service;
 
-import com.episen.docmanagement.dto.DocumentDto;
 import com.episen.docmanagement.dto.UserDto;
 import com.episen.docmanagement.entity.Document;
 import com.episen.docmanagement.repository.DocumentRepository;
@@ -41,6 +40,7 @@ public class DocumentService {
         document.setEditor(username);
 
 
+        // Alors ici on parcours la liste des roles pour construire userDto
         UserDto userDto = UserDto.builder()
                 .username(authentication.getName())
                 .roles(
@@ -50,10 +50,12 @@ public class DocumentService {
                                 .collect(Collectors.toList())
                 ).build();
 
+        // et la on la reparcours pour trouver le role ROLE_WRITTER
         if(userDto.getRoles().contains("ROLE_WRITTER")){
             documentRepository.insert(document);
             return createJsonWithDocumentsDetails(0, findAll().size());
         } else {
+            // Jamais de system.out dans du code qui tourne dans un serveur, il faut utiliser des logger
             System.out.println("PAS INSEREE");
         }
         return null;
@@ -84,17 +86,23 @@ public class DocumentService {
     }
 
     //Lock optimiste
+
+    /**
+     * Il manque le controle du lock, la gestion des droits et la vérification du statut du document
+     */
     public Document updateDocument(String documentId, Document updateDoc){
 
         Document document = getDocumentById(documentId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        // si vous ne trouvez pas le document cela fait une NullPointerException ici
         int version = document.getVersion();
         document.setEditor(username);
 
         document.setBody(updateDoc.getBody());
         document.setTitle(updateDoc.getTitle());
         document.setUpdated(LocalDateTime.now());
+        // Pourquoi retourner chercher le document ici ??? en plus vous comparez la même version de doucument
         if (version == getDocumentById(documentId).getVersion()){
             document.setVersion(version+1);
             return documentRepository.save(document);

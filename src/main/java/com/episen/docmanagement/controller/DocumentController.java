@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @Slf4j
 @Controller
+/**
+ * Il manque la mise à jour du statut du document, j'avais spécifié une interface dédiée
+ */
 public class DocumentController {
 
     public static final String PATH = "/api/v1/documents";
@@ -24,6 +27,7 @@ public class DocumentController {
         return documentService.insertInMongo(document);
     }
 
+    // C'est pas la spécification que j'ai donnée
     @GetMapping("/{pageSize}/{page}")
     public JSONObject findAll(@PathVariable(required = true) int page, @PathVariable(required = false) int pageSize){
         return documentService.createJsonWithDocumentsDetails(page, pageSize);

@@ -18,6 +18,9 @@ public class LockService {
 
     public DocumentService documentService;
 
+    /**
+     * Ici on peut poser un lock sur un document qui n'existe pas
+     */
     public Lock createLock(String documentId, Lock lock){
         Lock newLock = new Lock(documentId, lock.getOwner(), lock.getCreated());
         Lock insertedUser = lockRepository.insert(newLock);
@@ -36,6 +39,9 @@ public class LockService {
         return null;
     }
 
+    /**
+     * Ici n'importe qui peut supprimer le lock
+     */
     public Lock deleteLock(String documentId) {
         Lock lock = getLock(documentId);
         this.lockRepository.delete(lock);
